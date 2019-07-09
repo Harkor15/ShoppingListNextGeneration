@@ -7,4 +7,10 @@
     <string name="email">Email</string>
     <string name="account_created">Account created</string>
     <string name="login_failed">Login failed</string>
+    <string name="add_new">Add new</string>
+    <string name="back">Back</string>
+    <string name="confirm">Confirm</string>
+    <string name="new_shopping_list">New shopping list</string>
+    <string name="shopping_list_title"> Shopping list title</string>
+    <string name="new_item">New item</string>
 </resources>

@@ -1,5 +1,6 @@
 package harkor.shoppinglistnextgeneration
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -19,6 +20,14 @@ class MainListActivity : AppCompatActivity() {
         MobileAds.initialize(this,applicationContext.resources.getString(R.string.ADDMOB_APP_ID))
         val adRequest = AdRequest.Builder().build()
         adView.loadAd(adRequest)
+        val usserUid= FirebaseAuth.getInstance().currentUser?.uid
+        Log.d("slng", usserUid)
+
+
+        add_new_list_button.setOnClickListener(View.OnClickListener {
+            val intent= Intent(applicationContext,AddNewListActivity::class.java)
+            startActivity(intent)
+        })
         sign_out_icon.setOnClickListener(View.OnClickListener {
             FirebaseAuth.getInstance().signOut()
             finish()
