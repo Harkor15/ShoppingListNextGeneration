@@ -6,7 +6,7 @@ import java.io.Serializable
 
 class FirestoreManager(private val userId: String) {
     val db = FirebaseFirestore.getInstance()
-    fun addNewList(items: ArrayList<String>, listName:String){
+    fun addNewList(items: ArrayList<String>, listName:String,resultInterface:AddNewShoppingListResult){
         val itemsCompleted= ArrayList<ItemStruct>()
         for(i in items){
             itemsCompleted.add(ItemStruct(i,1))
@@ -19,12 +19,8 @@ class FirestoreManager(private val userId: String) {
 
         db.collection("users").document(userId).collection("user_lists")
             .add(shoppingList)
-            .addOnSuccessListener { documentReference ->
-                Log.d("slng", "DocumentSnapshot added with ID: ${documentReference.id}") }
-            .addOnFailureListener { e ->
-            Log.w("slng", "Error adding document", e)
-        }
-
+            .addOnSuccessListener { resultInterface.addSuccess() }
+            .addOnFailureListener { resultInterface.addFailure() }
     }
 }
 
