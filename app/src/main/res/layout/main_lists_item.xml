@@ -27,5 +27,5 @@
             app:layout_constraintEnd_toStartOf="@+id/main_list_item_delete_icon"
             app:layout_constraintTop_toTopOf="@+id/main_list_item_delete_icon"
             app:layout_constraintBottom_toBottomOf="@+id/main_list_item_delete_icon" android:padding="7dp"
-            android:visibility="invisible"/>
+            android:visibility="visible"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

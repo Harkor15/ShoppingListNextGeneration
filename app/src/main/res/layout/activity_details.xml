@@ -47,7 +47,7 @@
     <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
+            android:inputType="text"
             android:ems="10"
             android:id="@+id/details_new_edit_text" android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="@+id/details_add_button" android:layout_marginStart="8dp"

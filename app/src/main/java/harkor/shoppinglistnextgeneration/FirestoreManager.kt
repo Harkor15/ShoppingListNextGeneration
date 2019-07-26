@@ -10,8 +10,9 @@ class FirestoreManager(private val userId: String) {
 
     fun addNewList(items: ArrayList<String>, listName:String,resultInterface:AddNewShoppingListResult){
         val itemsCompleted= ArrayList<ItemStruct>()
-        for(i in items){
-            itemsCompleted.add(ItemStruct(i,"unselected"))
+        for(item in items){
+            itemsCompleted.add(ItemStruct(item,"unselected"))
+
         }
         val shoppingList= hashMapOf(
             "items" to itemsCompleted,
@@ -34,7 +35,7 @@ class FirestoreManager(private val userId: String) {
                 val listOfLists=ArrayList<MainListItem>()
                 for(doc in value!!){
                     var shared=false
-                    if(doc.data["shared"] !=0) shared=true
+                    if(doc.data["shared"] !=0L) shared=true
                     listOfLists.add(MainListItem(doc.data["name"] as String,shared,true,userId,doc.id))
                 }
                 mainListInferface.setDataInMainList(listOfLists)
@@ -73,6 +74,13 @@ class FirestoreManager(private val userId: String) {
                         snapshot.data?.get("name") as String,mine,shared,items)
                 }
             }
+    }
+
+    fun editProduct(userId: String, listId:String,items:ArrayList<ItemStruct>){
+        db.collection("users").document(userId).collection("user_lists").document(listId)
+            .update(mapOf("items" to items))
+            .addOnFailureListener{Log.d("slng","Update failure")}
+            .addOnSuccessListener { Log.d("slng","Update success") }
     }
 
 }

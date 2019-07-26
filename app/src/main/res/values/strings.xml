@@ -19,4 +19,16 @@
     <string name="cancel">Cancel</string>
     <string name="delete_list">Delete shopping list</string>
     <string name="are_you_sure">Are you sure?</string>
+    <string name="enter_name_of_new_product">Enter name of new product</string>
+    <string name="delete_product">Delete product</string>
+    <string name="add_new_shopping_list">Add new shopping list</string>
+    <string name="click_again_to_exit">Click again to exit</string>
+    <string name="sign_in_with_google">Sign in with Google</string>
+    <string name="copy_code_to_clipboard">Copy code to clipboard</string>
+    <string name="send_code">Send code</string>
+    <string name="share_using">Share using</string>
+    <string name="share_your_shopping_list">Share your shopping list</string>
+    <string name="copied_to_clipboard">Copied to clipboard</string>
+    <string name="add_shared_list">Add shared list</string>
+    <string name="scanning_canceled">Scanning canceled</string>>
 </resources>

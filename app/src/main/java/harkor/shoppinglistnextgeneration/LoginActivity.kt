@@ -30,8 +30,6 @@ class LoginActivity : AppCompatActivity() {
             .build()
         googleSignInClient= GoogleSignIn.getClient(applicationContext,gso)
 
-
-
         login_button.setOnClickListener(View.OnClickListener {
             signInWithEmail(login_edit_text.text.toString(),password_edit_text.text.toString())
         })
@@ -53,15 +51,20 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun signInWithEmail(login:String, password: String){
-        auth.signInWithEmailAndPassword(login, password)
-            .addOnCompleteListener(this) {task->
-                if(task.isSuccessful){
-                    val intent = Intent(applicationContext, MainListActivity::class.java)
-                    startActivity(intent)
-                }else{
-                    Toast.makeText(baseContext, R.string.login_failed,Toast.LENGTH_SHORT).show()
+        if(login!=""&&password!=""){
+            auth.signInWithEmailAndPassword(login, password)
+                .addOnCompleteListener(this) {task->
+                    if(task.isSuccessful){
+                        login_edit_text.setText("")
+                        password_edit_text.setText("")
+                        val intent = Intent(applicationContext, MainListActivity::class.java)
+                        startActivity(intent)
+                    }else{
+                        Toast.makeText(baseContext, R.string.login_failed,Toast.LENGTH_SHORT).show()
+                    }
                 }
-            }
+        }
+
     }
 
     private fun signInWithGoogle() {

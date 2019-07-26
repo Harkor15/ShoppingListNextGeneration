@@ -42,6 +42,10 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.6'
+    implementation "com.airbnb.android:lottie:3.0.7"
+    implementation 'com.google.zxing:core:3.2.1'
+    implementation 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
+    implementation 'me.dm7.barcodescanner:zxing:1.9'
 }
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'io.fabric'

@@ -8,23 +8,15 @@
         tools:context=".MainListActivity">
 
     <Button
-            android:text="Button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/button" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/add_new_list_button"
-            android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginLeft="8dp" android:layout_marginStart="8dp" android:layout_marginRight="8dp"
-            android:layout_marginEnd="8dp"/>
-    <Button
             android:text="@string/add_new"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/add_new_list_button" app:layout_constraintStart_toEndOf="@+id/button"
-            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/add_new_list_button"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginRight="8dp" android:layout_marginEnd="8dp" android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"/>
+            android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toEndOf="@+id/add_shared_button" app:layout_constraintHorizontal_bias="0.5"
+            android:layout_marginLeft="8dp" android:layout_marginStart="8dp"/>
 
     <com.google.android.gms.ads.AdView
             xmlns:ads="http://schemas.android.com/apk/res-auto"
@@ -34,8 +26,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/adView" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginBottom="4dp"
-            app:layout_constraintBottom_toTopOf="@+id/button"/>
+            app:layout_constraintBottom_toTopOf="@+id/add_new_list_button"
+            app:layout_constraintHorizontal_bias="0.0" android:layout_marginBottom="8dp"/>
     <androidx.recyclerview.widget.RecyclerView
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -58,4 +50,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp" android:layout_marginRight="8dp" android:layout_marginTop="8dp"
             app:layout_constraintTop_toTopOf="parent"/>
+    <Button
+            android:text="@string/add_shared_list"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/add_shared_button" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/add_new_list_button"
+            android:layout_marginLeft="8dp" android:layout_marginStart="8dp" android:layout_marginRight="8dp"
+            android:layout_marginEnd="8dp" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

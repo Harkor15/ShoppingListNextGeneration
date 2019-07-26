@@ -1,14 +1,17 @@
 package harkor.shoppinglistnextgeneration
 
+import android.app.AlertDialog
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.details_list_item.view.*
 
-class DetailsListAdapter(var items:ArrayList<ItemStruct>,private val context:Context):  RecyclerView.Adapter<DetailsViewHolder>(){
+class DetailsListAdapter(var items:ArrayList<ItemStruct>, private val context:Context, private val editDetails: EditDetails):
+    RecyclerView.Adapter<DetailsViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DetailsViewHolder {
         return DetailsViewHolder(LayoutInflater.from(context).inflate(R.layout.details_list_item, parent,false) )
     }
@@ -20,13 +23,16 @@ class DetailsListAdapter(var items:ArrayList<ItemStruct>,private val context:Con
     override fun onBindViewHolder(holder: DetailsViewHolder, position: Int) {
         holder.nameCheckBox.text=items[position].name
         holder.nameCheckBox.isChecked = items[position].status=="selected"
-
-        Log.d("slng",items[position].status)
-        //TODO: ON DELETE CLICK
-        //TODO: ON CHECK / UNCHECK
-
+        holder.deleteIcon.setOnClickListener{
+              AlertDialog.Builder(context)
+                .setTitle(R.string.delete_product)
+                .setMessage(R.string.are_you_sure)
+                .setPositiveButton(R.string.ok) { dialog, id->editDetails.deleteProduct(position)}
+                .setNegativeButton(R.string.cancel,null)
+                .create().show()
+        }
+        holder.nameCheckBox.setOnClickListener { editDetails.checkBoxSign(position,holder.nameCheckBox.isChecked) }
     }
-
 }
 
 class DetailsViewHolder(view: View):RecyclerView.ViewHolder(view){
