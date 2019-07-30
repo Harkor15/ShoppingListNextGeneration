@@ -16,15 +16,28 @@ import kotlinx.android.synthetic.main.activity_main_list.*
 import kotlinx.android.synthetic.main.dialog_add_shared.view.*
 import java.util.*
 import kotlin.collections.ArrayList
-import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.util.Log
 
 
-class MainListActivity : AppCompatActivity(), MainListInferface {
+class MainListActivity : AppCompatActivity(), MainListInferface, AddToSharedInterface{
+    override fun sharedSucces() {
+        Toast.makeText(this,R.string.success,Toast.LENGTH_SHORT).show()
+    }
+
+    override fun sharedError() {
+        Toast.makeText(this,R.string.error,Toast.LENGTH_SHORT).show()
+    }
+
+    override fun ownListError() {
+        Toast.makeText(this,R.string.success,Toast.LENGTH_SHORT).show()
+    }
+
     var listOfListst=ArrayList<MainListItem>()
     val adapter=MainListAdapter(listOfListst,this)
     var savedTime=0L
+    private lateinit var firestoreManager:FirestoreManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_list)
@@ -35,7 +48,7 @@ class MainListActivity : AppCompatActivity(), MainListInferface {
         main_list_recycler_view.layoutManager = LinearLayoutManager(this)
 
         val auth = FirebaseAuth.getInstance()
-        val firestoreManager=FirestoreManager(auth.currentUser!!.uid)
+        firestoreManager=FirestoreManager(auth.currentUser!!.uid)
         firestoreManager.getListOfLists(this)
 
         add_new_list_button.setOnClickListener(View.OnClickListener {
@@ -63,7 +76,7 @@ class MainListActivity : AppCompatActivity(), MainListInferface {
             savedTime=currentTime
         }
     }
-    fun addSharedDialog(){
+    private fun addSharedDialog(){
         val builder= AlertDialog.Builder(this)
         val mView = LayoutInflater.from(this).inflate(R.layout.dialog_add_shared,null)
         builder.setTitle(R.string.add_shared_list)
@@ -72,19 +85,17 @@ class MainListActivity : AppCompatActivity(), MainListInferface {
             startQRScanner()
         }
         mView.add_shared_clipboard.setOnClickListener{
-            //TODO: check clipboard
             val clipboardManager=getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             if(clipboardManager.primaryClip!=null){
                 val code = clipboardManager.primaryClip.getItemAt(0).text
                 addSharedList(code.toString())
             }
-
         }
         builder.setView(mView)
         builder.create().show()
     }
 
-    fun startQRScanner(){
+    private fun startQRScanner(){
         IntentIntegrator(this).initiateScan()
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -99,11 +110,14 @@ class MainListActivity : AppCompatActivity(), MainListInferface {
             super.onActivityResult(requestCode, resultCode, data)
         }
     }
-    fun addSharedList(code:String){
-        //TODO: Add shared list from code
-        Toast.makeText(this, code,Toast.LENGTH_SHORT).show()
+    private fun addSharedList(code:String){
+        val userAndListId=code.split("_")
+        if(userAndListId.size==2){
+            firestoreManager.addSharedLists(userAndListId[0],userAndListId[1],this)
+        }
     }
 }
 
 class MainListItem(val name:String, val shared:Boolean, val mine:Boolean, val userId:String, val listId:String)
 interface MainListInferface{fun setDataInMainList(listOfListst:ArrayList<MainListItem>)}
+interface AddToSharedInterface{fun sharedSucces() fun sharedError() fun ownListError() }

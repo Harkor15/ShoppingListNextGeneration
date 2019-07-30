@@ -1,5 +1,7 @@
 package harkor.shoppinglistnextgeneration
+import android.speech.RecognizerResultsIntent
 import android.util.Log
+import android.widget.Toast
 import com.google.firebase.firestore.FirebaseFirestore
 import java.io.Serializable
 
@@ -83,7 +85,31 @@ class FirestoreManager(private val userId: String) {
             .addOnSuccessListener { Log.d("slng","Update success") }
     }
 
+    fun addSharedLists(listOwnerId:String,listId:String,addToSharedInterface: AddToSharedInterface ){
+        if(userId==listOwnerId){
+            addToSharedInterface.ownListError()
+        }else{
+            val sharedList= hashMapOf(
+                "list_owner_id" to listOwnerId,
+                "list_id" to listId
+            )
+            db.collection("users").document(userId).collection("user_shared_lists")
+                .add(sharedList)
+            .addOnSuccessListener { addToSharedInterface.sharedSucces() }
+            .addOnFailureListener { addToSharedInterface.sharedError() }
+        }
+    }
+
+    fun deleteSharedList(sharedListRecordId:String){
+        db.collection("users").document(userId).collection("user_shared_lists").document(sharedListRecordId)
+            .delete()
+            .addOnSuccessListener { Log.d("slng", "List deleted") }
+            .addOnFailureListener{  Log.d("slng", "Deleting failure")}
+    }
+
+    fun getSharedLists(userId: String){
+
+    }
+
 }
-
-
 class ItemStruct( var name: String,  var status: String) : Serializable
