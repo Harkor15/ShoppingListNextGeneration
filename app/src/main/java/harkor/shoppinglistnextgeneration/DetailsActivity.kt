@@ -16,7 +16,7 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_details.*
 
 class DetailsActivity : AppCompatActivity(),DetailsInterface,EditDetails {
-    private var items=ArrayList<ItemStruct>()
+    private var items=ArrayList<FirestoreManager.ItemStruct>()
     private val adapter= DetailsListAdapter(items,this,this)
     private val loggedUserId=FirebaseAuth.getInstance().currentUser!!.uid
     private var userId=""
@@ -31,6 +31,7 @@ class DetailsActivity : AppCompatActivity(),DetailsInterface,EditDetails {
         details_ad_view.loadAd(adRequest)
         listId= intent.extras.getString("listId")
         userId= intent.extras.getString("userId")
+        Log.d("slng", "List: $listId User: $userId")
         details_recycler_view.layoutManager= LinearLayoutManager(this)
         details_recycler_view.adapter=adapter
         details_back_icon.setOnClickListener{finish()}
@@ -42,7 +43,7 @@ class DetailsActivity : AppCompatActivity(),DetailsInterface,EditDetails {
             if(newProduct==""){
                 Toast.makeText(applicationContext,R.string.enter_name_of_new_product, Toast.LENGTH_SHORT).show()
             }else{
-                items.add(ItemStruct(newProduct,"unselected"))
+                items.add(FirestoreManager.ItemStruct(newProduct, "unselected"))
                 firestoreManager.editProduct(userId,listId,items)
                 details_new_edit_text.setText("")
             }
@@ -60,7 +61,6 @@ class DetailsActivity : AppCompatActivity(),DetailsInterface,EditDetails {
                         finish()
                     }
                 }
-
                 AlertDialog.Builder(this)
                     .setTitle(R.string.delete_list)
                     .setMessage(R.string.are_you_sure)
@@ -71,22 +71,17 @@ class DetailsActivity : AppCompatActivity(),DetailsInterface,EditDetails {
                         if (mInterstitialAd.isLoaded) {
                             mInterstitialAd.show()
                         }
-                        //finish()//TODO: BANNER
-
-
                     }
                     .setNegativeButton(R.string.cancel,null)
                     .create().show()
-
-
             }
         }
 
     }
 
-    override fun setListData(name: String, mine: Boolean, shared: Boolean, items: ArrayList<ItemStruct>) {
+    override fun setListData(name: String, mine: Boolean, shared: Boolean, items: ArrayList<FirestoreManager.ItemStruct>) {
         details_name.text=name
-        //TODO: SHARED
+
         this.items=items
         adapter.items=this.items
         adapter.notifyDataSetChanged()
@@ -108,5 +103,5 @@ class DetailsActivity : AppCompatActivity(),DetailsInterface,EditDetails {
         firestoreManager.editProduct(userId,listId,items)
     }
 }
-interface DetailsInterface{fun setListData(name:String, mine:Boolean, shared:Boolean, items:ArrayList<ItemStruct>)}
+interface DetailsInterface{fun setListData(name:String, mine:Boolean, shared:Boolean, items:ArrayList<FirestoreManager.ItemStruct>)}
 interface EditDetails{fun deleteProduct(productId:Int) fun checkBoxSign(position:Int, check:Boolean)}

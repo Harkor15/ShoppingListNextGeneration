@@ -1,10 +1,7 @@
 package harkor.shoppinglistnextgeneration
 
 import android.app.AlertDialog
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
-import android.content.Intent
+import android.content.*
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -22,44 +19,53 @@ import kotlinx.android.synthetic.main.dialog_share_list.view.*
 import kotlinx.android.synthetic.main.main_lists_item.view.*
 
 
-class MainListAdapter(var items:ArrayList<MainListItem>,
-                      private val context: Context): RecyclerView.Adapter<ViewHolder>() {
+class MainListAdapter(private val context: Context): RecyclerView.Adapter<ViewHolder>() {
+    lateinit var firestoreManager:FirestoreManager
+    var items=ArrayList<MainListItem>()
+    var sharedItems=ArrayList<MainListItem>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(context).inflate(R.layout.main_lists_item, parent,false) )
     }
 
     override fun getItemCount(): Int {
-        return items.size
+        return items.size+sharedItems.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        lateinit var singleListItem:MainListItem
+        if(position<items.size){
+            singleListItem=items[position]
+        }else{
+            singleListItem=sharedItems[position-items.size]
+        }
+
         holder.itemView.setOnClickListener{
             val intent = Intent(context,DetailsActivity::class.java)
-            //val bundle= Bundle()
-            intent.putExtra("userId", items[position].userId)
-            intent.putExtra("listId", items[position].listId)
+            intent.putExtra("userId", singleListItem.userId)
+            intent.putExtra("listId", singleListItem.listId)
             startActivity(context,intent,null)
         }
-        holder.name.text=items[position].name
-        if(items[position].mine){
+        holder.name.text=singleListItem.name
+        if(singleListItem.mine){
             holder.deleteIcon.setOnClickListener{
                 deleteDialog(position)
             }
+            holder.deleteIcon.visibility=View.VISIBLE
             holder.sharedIcon.setOnClickListener{
-                val code=items[position].userId+"_"+items[position].listId
+                val code=singleListItem.userId+"_"+singleListItem.listId
                 shareDialog(code)
             }
 
 
-            val shared=items[position].shared
+            val shared=singleListItem.shared
             Log.d("slng", "$shared on $position")
-            if(items[position].shared) holder.sharedIcon.setImageResource(R.drawable.ic_people_green_24dp)
+            if(singleListItem.shared) holder.sharedIcon.setImageResource(R.drawable.ic_people_green_24dp)
             else holder.sharedIcon.setImageResource(R.drawable.ic_people_black_24dp)
         }else{
             holder.deleteIcon.visibility=View.INVISIBLE
             holder.sharedIcon.setImageResource(R.drawable.ic_people_blue_24dp)
             holder.sharedIcon.setOnClickListener{
-                unShareDialog()
+                unShareDialog(singleListItem.sharedId,position-items.size)
             }
         }
     }
@@ -68,7 +74,7 @@ class MainListAdapter(var items:ArrayList<MainListItem>,
         builder.setTitle(R.string.delete_list)
             .setMessage(R.string.are_you_sure)
             .setPositiveButton(R.string.ok) { dialog, id->
-                FirestoreManager(items[position].userId).deleteList(items[position].listId)
+                firestoreManager.deleteList(items[position].listId)
                 items.removeAt(position)
                 this.notifyDataSetChanged()
             }
@@ -104,10 +110,19 @@ class MainListAdapter(var items:ArrayList<MainListItem>,
         builder.setView(mView)
         builder.create().show()
     }
-    private fun unShareDialog(){
-        //TODO: UN SHARE DIALOG
+    private fun unShareDialog(sharedId:String,numberInList:Int){
+        AlertDialog.Builder(context)
+            .setTitle(R.string.cancel_shareing)
+            .setMessage(R.string.cancel_sharing_sure)
+            .setNegativeButton(R.string.cancel,null)
+            .setPositiveButton(R.string.confirm){dialog,id ->
+                //firestoreManager.deleteList(sharedId)
+                firestoreManager.deleteSharedList(sharedId)
+                sharedItems.removeAt(numberInList)
+                this.notifyDataSetChanged()
+            }
+            .create().show()
     }
-
 }
 
 class ViewHolder(view: View): RecyclerView.ViewHolder(view) {

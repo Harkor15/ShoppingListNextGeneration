@@ -2,15 +2,13 @@ package harkor.shoppinglistnextgeneration
 
 import android.app.AlertDialog
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.details_list_item.view.*
 
-class DetailsListAdapter(var items:ArrayList<ItemStruct>, private val context:Context, private val editDetails: EditDetails):
+class DetailsListAdapter(var items:ArrayList<FirestoreManager.ItemStruct>, private val context:Context, private val editDetails: EditDetails):
     RecyclerView.Adapter<DetailsViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DetailsViewHolder {
         return DetailsViewHolder(LayoutInflater.from(context).inflate(R.layout.details_list_item, parent,false) )

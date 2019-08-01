@@ -31,5 +31,10 @@
     <string name="copied_to_clipboard">Copied to clipboard</string>
     <string name="add_shared_list">Add shared list</string>
     <string name="scanning_canceled">Scanning canceled</string>
-    <string name="success">Success</string>>
+    <string name="success">Success</string>
+    <string name="cancel_shareing">Cancel sharing</string>
+    <string name="cancel_sharing_sure">Are you sure you do not want to use this list anymore?</string>
+    <string name="you_have_too_much_shared_lists">You have too many shared lists</string>
+    <string name="this_list_is_already_added">This list is already added</string>
+    <string name="you_can_not_share_your_own_list">You can not share your own list</string>>
 </resources>
