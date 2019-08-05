@@ -1,11 +1,27 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="Theme.MyAppTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+    </style>
+    <style name="MyButtons" parent="@style/Widget.AppCompat.Button.Colored">
+        <!--<item name="android:background">@drawable/button_style</item>-->
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:fontFamily">@font/roboto_bold</item>
     </style>
 
+    <style name="MyEditText">
+        <!--<item name="android:textColor">@color/AlmostBlack</item>
+        <item name="android:textColorHint">@color/Gray</item>
+        <item name="android:textColorHighlight">@color/AlmostBlack</item>
+        <item name="android:fontFamily">@font/roboto_light</item>-->
+
+    </style>
+    <style name="DialogStyle" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:background">@color/BackgroundColor</item>
+    </style>
 </resources>

@@ -5,6 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/BackgroundColor"
         tools:context=".LoginActivity" android:visibility="visible">
     <EditText
             android:layout_width="0dp"
@@ -17,7 +18,8 @@
             android:layout_marginRight="32dp" android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
             android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintVertical_bias="0.49" android:hint="@string/email"
-            android:visibility="visible"/>
+            android:visibility="visible"
+            style="@style/MyEditText" />
     <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -28,17 +30,19 @@
             app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="32dp"
             android:layout_marginStart="32dp" android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@+id/login_edit_text" android:hint="@string/password"
-            android:visibility="visible"/>
+            android:visibility="visible"
+            style="@style/MyEditText"/>
     <Button
             android:text="@string/login"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/login_button" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="12dp"
             app:layout_constraintTop_toBottomOf="@+id/password_edit_text" android:layout_marginLeft="32dp"
             android:layout_marginStart="32dp" android:layout_marginRight="32dp" android:layout_marginEnd="32dp"
-            android:visibility="visible"/>
+            android:visibility="visible"
+            style="@style/MyButtons" app:layout_constraintHorizontal_bias="0.0"/>
     <Button
             android:text="@string/register"
             android:layout_width="0dp"
@@ -48,7 +52,7 @@
             app:layout_constraintTop_toBottomOf="@+id/login_button"
             android:visibility="visible"
             app:layout_constraintStart_toEndOf="@+id/google_sign_button" app:layout_constraintHorizontal_bias="0.5"
-            android:layout_marginRight="32dp" android:layout_marginEnd="32dp"/>
+            android:layout_marginRight="32dp" android:layout_marginEnd="32dp" style="@style/MyButtons"/>
     <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/animation_view"
             android:layout_width="0dp"

@@ -5,7 +5,8 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainListActivity">
+        tools:context=".MainListActivity"
+        android:background="@color/BackgroundColor">
 
     <Button
             android:text="@string/add_new"
@@ -16,7 +17,7 @@
             android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
             app:layout_constraintStart_toEndOf="@+id/add_shared_button" app:layout_constraintHorizontal_bias="0.5"
-            android:layout_marginLeft="8dp" android:layout_marginStart="8dp"/>
+            android:layout_marginLeft="8dp" android:layout_marginStart="8dp" style="@style/MyButtons"/>
 
     <com.google.android.gms.ads.AdView
             xmlns:ads="http://schemas.android.com/apk/res-auto"
@@ -58,6 +59,6 @@
             app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/add_new_list_button"
             android:layout_marginLeft="8dp" android:layout_marginStart="8dp" android:layout_marginRight="8dp"
             android:layout_marginEnd="8dp" android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent" style="@style/MyButtons"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

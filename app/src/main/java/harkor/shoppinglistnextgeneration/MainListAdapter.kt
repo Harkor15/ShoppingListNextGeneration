@@ -84,8 +84,9 @@ class MainListAdapter(private val context: Context): RecyclerView.Adapter<ViewHo
     private fun shareDialog(code:String){
         val builder=AlertDialog.Builder(context)
         val mView=LayoutInflater.from(context).inflate(R.layout.dialog_share_list,null)
-        builder.setTitle(R.string.share_your_shopping_list)
-        builder.setPositiveButton(R.string.ok,null)
+        //builder.setTitle(R.string.share_your_shopping_list)
+        //builder.setPositiveButton(R.string.ok,null)
+
         val multiFormatWriter = MultiFormatWriter()
         try{
             val bitMatrix = multiFormatWriter.encode(code, BarcodeFormat.QR_CODE,500,500)

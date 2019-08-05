@@ -3,6 +3,7 @@ package harkor.shoppinglistnextgeneration
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.graphics.LightingColorFilter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -91,12 +92,12 @@ class MainListActivity : AppCompatActivity(), MainListInferface, AddToSharedInte
         lateinit var dialog:AlertDialog
         val builder = AlertDialog.Builder(this)
         val mView = LayoutInflater.from(this).inflate(R.layout.dialog_add_shared, null)
-        builder.setTitle(R.string.add_shared_list)
-        builder.setNegativeButton(R.string.cancel, null)
+        mView.add_shared_cancel.setOnClickListener{
+            dialog.dismiss()
+        }
         mView.add_shared_camera.setOnClickListener {
             dialog.dismiss()
             startQRScanner()
-
         }
         mView.add_shared_clipboard.setOnClickListener {
             val clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
@@ -108,7 +109,9 @@ class MainListActivity : AppCompatActivity(), MainListInferface, AddToSharedInte
         }
         builder.setView(mView)
         dialog=builder.create()
-            dialog.show()
+        // dialog.window.decorView.background.setColorFilter(LightingColorFilter(0xFF000000, CUSTOM_COLOR))
+        dialog.show()
+
     }
 
     private fun startQRScanner() {
