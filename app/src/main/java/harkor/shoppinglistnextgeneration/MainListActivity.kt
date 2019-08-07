@@ -3,7 +3,6 @@ package harkor.shoppinglistnextgeneration
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
-import android.graphics.LightingColorFilter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,10 +19,7 @@ import kotlinx.android.synthetic.main.dialog_add_shared.view.*
 import java.util.*
 
 
-class MainListActivity : AppCompatActivity(), MainListInferface, AddToSharedInterface,MainListSharedInterface {
-
-
-    //var listOfListst=ArrayList<MainListItem>()
+class MainListActivity : AppCompatActivity(), MainListInferface, AddToSharedInterface, MainListSharedInterface {
     val adapter = MainListAdapter(this)
     var savedTime = 0L
     private lateinit var firestoreManager: FirestoreManager
@@ -38,7 +34,7 @@ class MainListActivity : AppCompatActivity(), MainListInferface, AddToSharedInte
 
         val auth = FirebaseAuth.getInstance()
         firestoreManager = FirestoreManager(auth.currentUser!!.uid)
-        adapter.firestoreManager=firestoreManager
+        adapter.firestoreManager = firestoreManager
         firestoreManager.getListOfLists(this)
         firestoreManager.getSharedLists(this)
 
@@ -46,17 +42,16 @@ class MainListActivity : AppCompatActivity(), MainListInferface, AddToSharedInte
             val intent = Intent(applicationContext, AddNewListActivity::class.java)
             startActivity(intent)
         })
-        sign_out_icon.setOnClickListener(View.OnClickListener {
+        sign_out_icon.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
             finish()
-        })
+        }
         add_shared_button.setOnClickListener {
-            if(adapter.sharedItems.size>=5){
-                Toast.makeText(this,R.string.you_have_too_much_shared_lists,Toast.LENGTH_SHORT).show()
-            }else{
+            if (adapter.sharedItems.size >= 5) {
+                Toast.makeText(this, R.string.you_have_too_much_shared_lists, Toast.LENGTH_SHORT).show()
+            } else {
                 addSharedDialog()
             }
-
         }
     }
 
@@ -65,14 +60,14 @@ class MainListActivity : AppCompatActivity(), MainListInferface, AddToSharedInte
         adapter.notifyDataSetChanged()
     }
 
-    override fun addSharedList(mainListItem:MainListItem) {
-        var alreadyInList=false
-        for(i in 0 until adapter.sharedItems.size){
-            if(adapter.sharedItems[i].sharedId==mainListItem.sharedId){
-                alreadyInList=true
+    override fun addSharedList(mainListItem: MainListItem) {
+        var alreadyInList = false
+        for (i in 0 until adapter.sharedItems.size) {
+            if (adapter.sharedItems[i].sharedId == mainListItem.sharedId) {
+                alreadyInList = true
             }
         }
-        if(!alreadyInList){
+        if (!alreadyInList) {
             adapter.sharedItems.add(mainListItem)
         }
         adapter.notifyDataSetChanged()
@@ -89,10 +84,10 @@ class MainListActivity : AppCompatActivity(), MainListInferface, AddToSharedInte
     }
 
     private fun addSharedDialog() {
-        lateinit var dialog:AlertDialog
+        lateinit var dialog: AlertDialog
         val builder = AlertDialog.Builder(this)
         val mView = LayoutInflater.from(this).inflate(R.layout.dialog_add_shared, null)
-        mView.add_shared_cancel.setOnClickListener{
+        mView.add_shared_cancel.setOnClickListener {
             dialog.dismiss()
         }
         mView.add_shared_camera.setOnClickListener {
@@ -108,10 +103,8 @@ class MainListActivity : AppCompatActivity(), MainListInferface, AddToSharedInte
             }
         }
         builder.setView(mView)
-        dialog=builder.create()
-        // dialog.window.decorView.background.setColorFilter(LightingColorFilter(0xFF000000, CUSTOM_COLOR))
+        dialog = builder.create()
         dialog.show()
-
     }
 
     private fun startQRScanner() {
@@ -134,25 +127,23 @@ class MainListActivity : AppCompatActivity(), MainListInferface, AddToSharedInte
     private fun addSharedList(code: String) {
         val userAndListId = code.split("_")
         if (userAndListId.size == 2) {
-            var duplicateCheccker=false
-            if(adapter.sharedItems.size!=0){
-                for(i in 0 until adapter.sharedItems.size){
-                    if(adapter.sharedItems[i].listId==userAndListId[1]){
-                        Toast.makeText(this,R.string.this_list_is_already_added,Toast.LENGTH_SHORT).show()
-                        duplicateCheccker=true
+            var duplicateCheccker = false
+            if (adapter.sharedItems.size != 0) {
+                for (i in 0 until adapter.sharedItems.size) {
+                    if (adapter.sharedItems[i].listId == userAndListId[1]) {
+                        Toast.makeText(this, R.string.this_list_is_already_added, Toast.LENGTH_SHORT).show()
+                        duplicateCheccker = true
                     }
                 }
             }
-            if(!duplicateCheccker) {
-                firestoreManager.addSharedLists(userAndListId[0], userAndListId[1], this,this)
+            if (!duplicateCheccker) {
+                firestoreManager.addSharedLists(userAndListId[0], userAndListId[1], this, this)
             }
         }
     }
 
-
     override fun sharedSuccess() {
         Toast.makeText(this, R.string.success, Toast.LENGTH_SHORT).show()
-        //TODO close dialog
     }
 
     override fun sharedError() {
@@ -164,14 +155,21 @@ class MainListActivity : AppCompatActivity(), MainListInferface, AddToSharedInte
     }
 }
 
-class MainListItem(val name: String, val shared: Boolean, val mine: Boolean, val userId: String, val listId: String, val sharedId:String)
+class MainListItem(
+    val name: String,
+    val shared: Boolean,
+    val mine: Boolean,
+    val userId: String,
+    val listId: String,
+    val sharedId: String
+)
 
 interface MainListInferface {
     fun setDataInMainList(listOfListst: ArrayList<MainListItem>)
 }
 
 interface MainListSharedInterface {
-    fun addSharedList(mainListItem:MainListItem)
+    fun addSharedList(mainListItem: MainListItem)
 }
 
 interface AddToSharedInterface {

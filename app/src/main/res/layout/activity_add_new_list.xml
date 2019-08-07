@@ -32,7 +32,7 @@
             app:layout_constraintTop_toBottomOf="@+id/add_screen_title" android:layout_marginStart="8dp"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp" android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginRight="8dp"
-            android:hint="@string/shopping_list_title" style="@style/MyEditText"/>
+            android:hint="@string/shopping_list_name" style="@style/MyEditText"/>
     <TextView
             android:text="@string/new_shopping_list"
             android:layout_width="wrap_content"

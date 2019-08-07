@@ -3,8 +3,6 @@ package harkor.shoppinglistnextgeneration
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import java.io.Serializable
-import java.lang.Exception
-
 
 @Suppress("UNCHECKED_CAST")
 class FirestoreManager(private val userId: String) {
@@ -38,7 +36,7 @@ class FirestoreManager(private val userId: String) {
                 for (doc in value!!) {
                     var shared = false
                     if (doc.data["shared"] != 0L) shared = true
-                    listOfLists.add(MainListItem(doc.data["name"] as String, shared, true, userId, doc.id,""))
+                    listOfLists.add(MainListItem(doc.data["name"] as String, shared, true, userId, doc.id, ""))
                 }
                 mainListInferface.setDataInMainList(listOfLists)
             }
@@ -86,7 +84,12 @@ class FirestoreManager(private val userId: String) {
             .addOnSuccessListener { Log.d("slng", "Update success") }
     }
 
-    fun addSharedLists(listOwnerId: String, listId: String, addToSharedInterface: AddToSharedInterface,mainListSharedInterface: MainListSharedInterface) {
+    fun addSharedLists(
+        listOwnerId: String,
+        listId: String,
+        addToSharedInterface: AddToSharedInterface,
+        mainListSharedInterface: MainListSharedInterface
+    ) {
         if (userId == listOwnerId) {
             addToSharedInterface.ownListError()
         } else {
@@ -96,9 +99,9 @@ class FirestoreManager(private val userId: String) {
             )
             db.collection("users").document(userId).collection("user_shared_lists")
                 .add(sharedList)
-                .addOnSuccessListener {doc->
+                .addOnSuccessListener { doc ->
                     addToSharedInterface.sharedSuccess()
-                    addSingleSharedList(doc.id,listOwnerId,listId,mainListSharedInterface)
+                    addSingleSharedList(doc.id, listOwnerId, listId, mainListSharedInterface)
                 }
                 .addOnFailureListener { addToSharedInterface.sharedError() }
         }
@@ -111,34 +114,49 @@ class FirestoreManager(private val userId: String) {
             .addOnFailureListener { Log.d("slng", "Deleting failure") }
     }
 
-    fun getSharedLists(mainListSharedInterface:MainListSharedInterface) {
+    fun getSharedLists(mainListSharedInterface: MainListSharedInterface) {
         db.collection("users").document(userId).collection("user_shared_lists")
             .get()
             .addOnSuccessListener { documents ->
-                for(document in documents){
-                    val id=document.id
-                    val listOwnerId=document.get("list_owner_id") as String
-                    val listId=document.get("list_id") as String
-                    addSingleSharedList(id,listOwnerId,listId,mainListSharedInterface)
+                for (document in documents) {
+                    val id = document.id
+                    val listOwnerId = document.get("list_owner_id") as String
+                    val listId = document.get("list_id") as String
+                    addSingleSharedList(id, listOwnerId, listId, mainListSharedInterface)
                 }
             }
-            .addOnFailureListener {Log.d("slng","Get shared list ERROR")}
+            .addOnFailureListener { Log.d("slng", "Get shared list ERROR") }
     }
-    private fun addSingleSharedList(recordId:String, listOwnerId:String, listId:String, mainListSharedInterface: MainListSharedInterface){
+
+    private fun addSingleSharedList(
+        recordId: String,
+        listOwnerId: String,
+        listId: String,
+        mainListSharedInterface: MainListSharedInterface
+    ) {
         db.collection("users").document(listOwnerId).collection("user_lists").document(listId)
             .get()
-            .addOnFailureListener{Log.d("slng","Single shared list get ERROR")}
-            .addOnSuccessListener {doc->
-                if(doc!=null){
-                    try{
-                        mainListSharedInterface.addSharedList(MainListItem(doc.data!!["name"] as String, true, false, listOwnerId, doc.id,recordId))
-                    }catch (ex: Exception){
-                        Log.d("slng", "List deleted!!! $ex")
+            .addOnFailureListener { Log.d("slng", "Single shared list get ERROR") }
+            .addOnSuccessListener { doc ->
+                if (doc != null) {
+                    try {
+                        mainListSharedInterface.addSharedList(
+                            MainListItem(
+                                doc.data!!["name"] as String,
+                                true,
+                                false,
+                                listOwnerId,
+                                doc.id,
+                                recordId
+                            )
+                        )
+                    } catch (ex: Exception) {
                         deleteSharedList(recordId)
                     }
 
                 }
+            }
     }
-}
 
-class ItemStruct(var name: String, var status: String) : Serializable}
+    class ItemStruct(var name: String, var status: String) : Serializable
+}

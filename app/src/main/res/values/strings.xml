@@ -1,13 +1,13 @@
 <resources>
     <string name="app_name">Shopping List Next Generation</string>
-    <string name="login">Login</string>
+    <string name="login" translatable="false">Login</string>
     <string name="password">Password</string>
     <string name="register">Register</string>
-    <string name="offline">Offline</string>
-    <string name="email">Email</string>
+    <string name="offline" translatable="false">Offline</string>
+    <string name="email" translatable="false">Email</string>
     <string name="account_created">Account created</string>
     <string name="login_failed">Login failed</string>
-    <string name="add_new">Add new</string>
+    <string name="add_new">Add list</string>
     <string name="back">Back</string>
     <string name="confirm">Confirm</string>
     <string name="new_shopping_list">New shopping list</string>
@@ -15,7 +15,7 @@
     <string name="new_item">New item</string>
     <string name="shopping_list_added">Shopping list added</string>
     <string name="error">Error</string>
-    <string name="ok">OK</string>
+    <string name="ok" translatable="false">OK</string>
     <string name="cancel">Cancel</string>
     <string name="delete_list">Delete shopping list</string>
     <string name="are_you_sure">Are you sure?</string>
@@ -36,5 +36,6 @@
     <string name="cancel_sharing_sure">Are you sure you do not want to use this list anymore?</string>
     <string name="you_have_too_much_shared_lists">You have too many shared lists</string>
     <string name="this_list_is_already_added">This list is already added</string>
-    <string name="you_can_not_share_your_own_list">You can not share your own list</string>>
+    <string name="you_can_not_share_your_own_list">You can not share your own list</string>
+    <string name="shopping_list_name">Shopping list name</string>>
 </resources>

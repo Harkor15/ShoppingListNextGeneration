@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Shopping List Next Generation</string>
+    <string name="account_created">Konto utworzone</string>
+    <string name="add_new">Dodaj liste</string>
+    <string name="add_new_shopping_list">"Dodaj nową listę zakupów "</string>
+    <string name="add_shared_list">Współdziel listę</string>
+    <string name="are_you_sure">Czy napewno?</string>
+    <string name="back">Wróć</string>
+    <string name="cancel">Anuluj</string>
+    <string name="cancel_shareing">Anuluj udostępnianie</string>
+    <string name="cancel_sharing_sure">Czy jesteś pewien że nie chcesz już używać tej listy?</string>
+    <string name="click_again_to_exit">Kliknij znów by wyjść</string>
+    <string name="confirm">Potwierdź</string>
+    <string name="copied_to_clipboard">Skopiowano do schowka</string>
+    <string name="copy_code_to_clipboard">Kopiuj kod do schowka</string>
+    <string name="delete_list">Usuń listę zakupów</string>
+    <string name="delete_product">Usuń produkt</string>
+    <string name="enter_name_of_new_product">Wprowadź nazwę produktu</string>
+    <string name="error">Błąd</string>
+    <string name="login_failed">Logowanie nie udane</string>
+    <string name="new_item">Nowy przedmiot</string>
+    <string name="new_shopping_list">Nowa lista zakupów</string>
+    <string name="password">Hasło</string>
+    <string name="register">Rejestracja</string>
+    <string name="scanning_canceled">Skanowanie anulowane</string>
+    <string name="send_code">Wyślij kod</string>
+    <string name="share_your_shopping_list">Udostępnij swoją listę zakupów</string>
+    <string name="shopping_list_added">Lista zakupów dodana</string>
+    <string name="success">Sukces</string>
+    <string name="this_list_is_already_added">Ta lista jest już dodana</string>
+    <string name="you_can_not_share_your_own_list">Nie możesz sobie udostępnić swojej listy</string>
+    <string name="you_have_too_much_shared_lists">Masz za dużo udostępnionych list</string>
+    <string name="share_using">Udostępnianie z użyciem</string>
+    <string name="shopping_list_name">Nazwa listy zakupów</string>
+    <string name="shopping_list_title">Tytuł listy zakupów</string>
+    <string name="sign_in_with_google">Logowanie z Google</string>
+</resources>
