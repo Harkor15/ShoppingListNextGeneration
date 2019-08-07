@@ -10,16 +10,6 @@ import kotlinx.android.synthetic.main.activity_add_new_list.*
 
 
 class AddNewListActivity : AppCompatActivity(), AddNewShoppingListResult {
-    override fun addSuccess() {
-        Toast.makeText(applicationContext, R.string.shopping_list_added, Toast.LENGTH_SHORT).show()
-        finish()
-    }
-
-    override fun addFailure() {
-        Toast.makeText(applicationContext, R.string.error, Toast.LENGTH_SHORT).show()
-    }
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_new_list)
@@ -47,6 +37,15 @@ class AddNewListActivity : AppCompatActivity(), AddNewShoppingListResult {
             if (shoppingListName == "") shoppingListName = getString(R.string.new_shopping_list)
             firestoreManager.addNewList(items, shoppingListName, this)
         }
+    }
+
+    override fun addSuccess() {
+        Toast.makeText(applicationContext, R.string.shopping_list_added, Toast.LENGTH_SHORT).show()
+        finish()
+    }
+
+    override fun addFailure() {
+        Toast.makeText(applicationContext, R.string.error, Toast.LENGTH_SHORT).show()
     }
 }
 

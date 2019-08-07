@@ -69,7 +69,6 @@ class FirestoreManager(private val userId: String) {
                     if (sharedDb != 0L) {
                         shared = true
                     }
-                    Log.d("slng snap", snapshot.data.toString())
                     detailsInterface.setListData(
                         snapshot.data?.get("name") as String, mine, shared, items
                     )

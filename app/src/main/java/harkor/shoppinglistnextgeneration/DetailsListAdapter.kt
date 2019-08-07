@@ -29,7 +29,7 @@ class DetailsListAdapter(
             AlertDialog.Builder(context)
                 .setTitle(R.string.delete_product)
                 .setMessage(R.string.are_you_sure)
-                .setPositiveButton(R.string.ok) { dialog, id -> editDetails.deleteProduct(position) }
+                .setPositiveButton(R.string.ok) { _, _ -> editDetails.deleteProduct(position) }
                 .setNegativeButton(R.string.cancel, null)
                 .create().show()
         }

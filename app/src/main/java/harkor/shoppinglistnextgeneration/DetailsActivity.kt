@@ -2,7 +2,6 @@ package harkor.shoppinglistnextgeneration
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -28,14 +27,14 @@ class DetailsActivity : AppCompatActivity(), DetailsInterface, EditDetails {
         MobileAds.initialize(this, applicationContext.resources.getString(R.string.ADDMOB_APP_ID))
         val adRequest = AdRequest.Builder().build()
         details_ad_view.loadAd(adRequest)
-        listId = intent.extras.getString("listId")
-        userId = intent.extras.getString("userId")
+        listId = intent.extras!!.getString("listId")!!
+        userId = intent.extras!!.getString("userId")!!
         details_recycler_view.layoutManager = LinearLayoutManager(this)
         details_recycler_view.adapter = adapter
         details_back_icon.setOnClickListener { finish() }
         val auth = FirebaseAuth.getInstance()
         val firestoreManager = FirestoreManager(auth.currentUser!!.uid)
-        firestoreManager.getShoppingList(listId!!, userId!!, this)
+        firestoreManager.getShoppingList(listId, userId, this)
         details_add_button.setOnClickListener {
             val newProduct = details_new_edit_text.text.toString()
             if (newProduct == "") {
@@ -62,8 +61,7 @@ class DetailsActivity : AppCompatActivity(), DetailsInterface, EditDetails {
                 AlertDialog.Builder(this)
                     .setTitle(R.string.delete_list)
                     .setMessage(R.string.are_you_sure)
-                    .setPositiveButton(R.string.ok) { dialog, id ->
-
+                    .setPositiveButton(R.string.ok) { _, _ ->
                         firestoreManager.deleteList(listId)
                         firestoreManager.deleteList(listId)
                         if (mInterstitialAd.isLoaded) {
@@ -74,7 +72,6 @@ class DetailsActivity : AppCompatActivity(), DetailsInterface, EditDetails {
                     .create().show()
             }
         }
-
     }
 
     override fun setListData(

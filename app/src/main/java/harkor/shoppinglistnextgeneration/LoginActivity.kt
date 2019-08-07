@@ -23,23 +23,22 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         auth = FirebaseAuth.getInstance()
-        Log.d("slng", auth.currentUser.toString())
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
         googleSignInClient = GoogleSignIn.getClient(applicationContext, gso)
 
-        login_button.setOnClickListener(View.OnClickListener {
+        login_button.setOnClickListener {
             signInWithEmail(login_edit_text.text.toString(), password_edit_text.text.toString())
-        })
-        register_button.setOnClickListener(View.OnClickListener {
+        }
+        register_button.setOnClickListener {
             val intent = Intent(applicationContext, RegisterActivity::class.java)
             startActivity(intent)
-        })
-        google_sign_button.setOnClickListener(View.OnClickListener {
+        }
+        google_sign_button.setOnClickListener {
             signInWithGoogle()
-        })
+        }
     }
 
     override fun onResume() {
