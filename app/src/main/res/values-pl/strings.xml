@@ -35,4 +35,6 @@
     <string name="shopping_list_name">Nazwa listy zakupów</string>
     <string name="shopping_list_title">Tytuł listy zakupów</string>
     <string name="sign_in_with_google">Logowanie z Google</string>
+    <string name="privacy_policy">Polityka prywatności</string>
+    <string name="login">Zaloguj</string>
 </resources>

@@ -1,9 +1,9 @@
 package harkor.shoppinglistnextgeneration
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -38,6 +38,10 @@ class LoginActivity : AppCompatActivity() {
         }
         google_sign_button.setOnClickListener {
             signInWithGoogle()
+        }
+        privacy_policy.setOnClickListener {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.PRIVACY_POLICY)))
+            startActivity(browserIntent)
         }
     }
 
